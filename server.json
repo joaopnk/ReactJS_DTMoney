@@ -2,7 +2,7 @@
     "transactions":[
         {
             "id": 1,
-            "descripton": "Desenvolvimento de site",
+            "description": "Desenvolvimento de site",
             "type": "income",
             "category": "venda",
             "price": 14000,
@@ -10,7 +10,7 @@
         },
         {
             "id": 2,
-            "descripton": "Jantar",
+            "description": "Jantar",
             "type": "outcome",
             "category": "alimentação",
             "price": 200,
