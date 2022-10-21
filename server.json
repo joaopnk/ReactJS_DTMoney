@@ -1,0 +1,20 @@
+{
+    "transactions":[
+        {
+            "id": 1,
+            "descripton": "Desenvolvimento de site",
+            "type": "income",
+            "category": "venda",
+            "price": 14000,
+            "createdAt": "2022-10-21T16:52:27.720Z"
+        },
+        {
+            "id": 2,
+            "descripton": "Jantar",
+            "type": "outcome",
+            "category": "alimentação",
+            "price": 200,
+            "createdAt": "2022-10-21T16:53:27.720Z"
+        }
+    ]
+}
