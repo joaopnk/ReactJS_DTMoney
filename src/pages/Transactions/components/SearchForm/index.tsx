@@ -1,50 +1,48 @@
-import { MagnifyingGlass } from "phosphor-react";
-import { useForm } from "react-hook-form";
-import { SearchFormContainer } from "./styles";
-import * as z from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useContext } from "react";
-import { TransactionsContext } from "../../../../contexts/TransactionsContext";
+import { MagnifyingGlass } from 'phosphor-react'
+import { useForm } from 'react-hook-form'
+import { SearchFormContainer } from './styles'
+import * as z from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useContext } from 'react'
+import { TransactionsContext } from '../../../../contexts/TransactionsContext'
 
 const searchFormSchema = z.object({
-    // Avisando que é string o campo query
-    query: z.string(),
-});
+  // Avisando que é string o campo query
+  query: z.string(),
+})
 
 // qual a tipagem dos campos do nosso formulario
-type SearchFormInputs = z.infer<typeof searchFormSchema>;
+type SearchFormInputs = z.infer<typeof searchFormSchema>
 
+export function SearchForm() {
+  const { fetchTransactions } = useContext(TransactionsContext)
 
-export function SearchForm(){
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<SearchFormInputs>({
+    resolver: zodResolver(searchFormSchema),
+  })
 
-    const { fetchTransactions } = useContext(TransactionsContext)
+  async function handleSearchTransactions(data: SearchFormInputs) {
+    //    await new Promise(resolve => setTimeout(resolve, 2000));
 
-    const {
-        register,
-        handleSubmit,
-        formState: {isSubmitting}
-    } = useForm<SearchFormInputs>({
-        resolver: zodResolver(searchFormSchema),
-    });
+    //     console.log(data);
+    await fetchTransactions(data.query)
+  }
 
-    async function handleSearchTransactions(data: SearchFormInputs){
-        //    await new Promise(resolve => setTimeout(resolve, 2000));
-
-        //     console.log(data);
-        await fetchTransactions(data.query)
-    }
-
-    return (
-        <SearchFormContainer onSubmit={handleSubmit(handleSearchTransactions)}>
-            <input 
-                type="text"
-                placeholder="Busque por transações" 
-                {...register('query')}
-            />
-            <button type="submit" disabled={isSubmitting}>
-                <MagnifyingGlass size={20}/>
-                Buscar
-            </button>
-        </SearchFormContainer>
-    )
+  return (
+    <SearchFormContainer onSubmit={handleSubmit(handleSearchTransactions)}>
+      <input
+        type="text"
+        placeholder="Busque por transações"
+        {...register('query')}
+      />
+      <button type="submit" disabled={isSubmitting}>
+        <MagnifyingGlass size={20} />
+        Buscar
+      </button>
+    </SearchFormContainer>
+  )
 }
