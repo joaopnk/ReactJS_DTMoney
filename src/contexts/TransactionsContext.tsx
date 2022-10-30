@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
+import { api } from "../lib/axios";
 
 interface Transaction {
     id: number;
@@ -27,17 +28,15 @@ export function TransactionsProvider({children}: TransactionsProviderProps){
 
     // Buscando na API
     async function fetchTransactions(query?: string){
-        const url = new URL('http://localhost:3000/transactions');
-
-        // Se estiver recebendo algum valor (query), considera ele na url
-        if(query){
-            url.searchParams.append('q', query);
-        }
-        const response = await fetch(url);
-        const data = await response.json();
+    
+        const response = await api.get('transactions', {
+            params: {
+                q: query
+            }
+        });
 
         // Atualizando..
-        setTransactions(data);
+        setTransactions(response.data);
     }
 
     // Para executar apenas uma unica vez
